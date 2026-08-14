@@ -1,3 +1,4 @@
+import 'package:flashcard/core/utils/theme/theme.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -10,7 +11,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flashcard',
-      theme: ThemeData(colorScheme: .fromSeed(seedColor: Colors.deepPurple)),
+      theme: AppTheme.lightMode,
+      darkTheme: AppTheme.darkMode,
+      themeMode: ThemeMode.dark,
       home: Navigations(),
     );
   }
