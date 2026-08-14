@@ -5,7 +5,7 @@ class AppCircularBtn extends StatelessWidget {
   const AppCircularBtn({
     super.key,
     required this.child,
-    this.size = 50.0,
+
     required this.onPressed,
     this.color = AppColors.primary,
     this.enableShadow = false,
@@ -14,14 +14,17 @@ class AppCircularBtn extends StatelessWidget {
     this.highlightColor = Colors.transparent,
     this.hoverColor = Colors.transparent,
     this.splashColor = Colors.transparent,
+    this.padding,
+    this.size = 50,
   });
 
   final Widget child;
-  final double size;
   final VoidCallback onPressed;
   final Color color, focusColor, highlightColor, hoverColor, splashColor;
   final Color? shadowColor;
   final bool enableShadow;
+  final EdgeInsetsGeometry? padding;
+  final double size;
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +37,7 @@ class AppCircularBtn extends StatelessWidget {
       child: Container(
         height: size,
         width: size,
+        padding: padding ?? EdgeInsetsGeometry.all(8),
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           color: color,
