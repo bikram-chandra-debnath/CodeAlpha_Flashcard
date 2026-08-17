@@ -1,7 +1,7 @@
 import 'package:flashcard/core/utils/constants/size.dart';
 import 'package:flashcard/features/home/bloc/card/card_bloc.dart';
 import 'package:flashcard/features/home/bloc/card/card_state.dart';
-import 'package:flashcard/features/home/data/cards_list.dart';
+import 'package:flashcard/features/home/data/datasource/cards_list.dart';
 import 'package:flashcard/features/home/presentation/widgets/view_card.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flip_card/flip_card_controller.dart';

@@ -4,7 +4,7 @@ import 'package:flashcard/core/utils/constants/size.dart';
 import 'package:flashcard/features/home/bloc/card/card_bloc.dart';
 import 'package:flashcard/features/home/bloc/card/card_event.dart';
 import 'package:flashcard/features/home/bloc/card/card_state.dart';
-import 'package:flashcard/features/home/data/cards_list.dart';
+import 'package:flashcard/features/home/data/datasource/cards_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
