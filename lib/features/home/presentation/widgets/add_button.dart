@@ -1,3 +1,4 @@
+import 'package:flashcard/core/Routes/route_names.dart';
 import 'package:flashcard/core/common/widgets/custom_elevated_button.dart';
 import 'package:flashcard/core/utils/constants/colors.dart';
 import 'package:flashcard/core/utils/constants/size.dart';
@@ -5,6 +6,7 @@ import 'package:flashcard/features/home/bloc/card/card_bloc.dart';
 import 'package:flashcard/features/home/bloc/card/card_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class AddButton extends StatelessWidget {
   const AddButton({super.key});
@@ -30,7 +32,9 @@ class AddButton extends StatelessWidget {
                 context,
               ).textTheme.titleLarge!.copyWith(fontSize: 20),
             ),
-            onPressed: () {},
+            onPressed: () {
+              context.pushNamed(RouteNames.add);
+            },
           );
         },
       ),

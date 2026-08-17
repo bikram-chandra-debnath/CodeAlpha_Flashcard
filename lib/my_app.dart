@@ -1,6 +1,6 @@
+import 'package:flashcard/core/Routes/app_routes.dart';
 import 'package:flashcard/core/utils/theme/theme.dart';
 import 'package:flashcard/features/home/bloc/card/card_bloc.dart';
-import 'package:flashcard/features/home/presentation/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -10,15 +10,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => CardBloc(),
-      child: MaterialApp(
-       
+      child: MaterialApp.router(
         title: 'Flashcard',
         theme: AppTheme.lightMode,
         darkTheme: AppTheme.darkMode,
         themeMode: ThemeMode.dark,
         debugShowCheckedModeBanner: false,
 
-        home: HomePage(),
+        routerConfig: router,
       ),
     );
   }
