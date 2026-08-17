@@ -4,7 +4,10 @@ class AppColors {
   AppColors._();
 
   //primary color
-  static const primary = Color(0xffE53935);
+  static const primary = Color.fromARGB(255, 111, 2, 141);
+  static const primaryDark = Color.fromARGB(255, 89, 0, 114);
+  static const secondery = Color.fromARGB(255, 136, 3, 173);
+  static const seconderyLight = Color.fromARGB(255, 210, 45, 255);
 
   // text colors
 
@@ -29,7 +32,8 @@ class AppColors {
   // error and validation colors
 
   static const Color error = Color(0xffd32f2f);
-  static const Color sucess = Color(0xff388e3c);
+  static const Color sucess = Color.fromARGB(255, 22, 154, 66);
+  static const Color sucessLight = Color.fromARGB(255, 28, 190, 82);
   static const Color warning = Color(0xfff57c00);
   static const Color info = Color(0xff1976d2);
 
