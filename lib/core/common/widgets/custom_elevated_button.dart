@@ -33,25 +33,31 @@ class AppElevatedBtn extends StatelessWidget {
       hoverColor: hoverColor,
       splashColor: splashColor,
       onTap: onPressed,
-      child: Container(
-        padding: padding,
-        height: size,
-        width: double.maxFinite,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: color,
-          boxShadow: [
-            BoxShadow(
-              color: enableShadow
-                  ? shadowColor ?? AppColors.darkGrey.withValues(alpha: 0.2)
-                  : Colors.transparent,
-              blurRadius: enableShadow ? 8 : 0,
-              spreadRadius: enableShadow ? 4 : 0,
-              offset: Offset(0, 5),
+      child: Card(
+        elevation: 02,
+        color: shadowColor,
+        child: Container(
+          padding: padding,
+          height: size,
+          width: double.maxFinite,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+
+            gradient: LinearGradient(
+              begin: AlignmentGeometry.directional(1, 0.8),
+              end: AlignmentGeometry.directional(1, -0.5),
+
+              colors: [
+                color.withValues(alpha: 0.5),
+
+                color.withValues(alpha: 0.8),
+
+                color,
+              ],
             ),
-          ],
+          ),
+          child: Center(child: child),
         ),
-        child: Center(child: child),
       ),
     );
   }
