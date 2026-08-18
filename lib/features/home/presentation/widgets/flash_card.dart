@@ -1,12 +1,16 @@
+import 'package:flashcard/core/Routes/route_names.dart';
 import 'package:flashcard/core/utils/constants/size.dart';
 import 'package:flashcard/features/home/bloc/card/card_bloc.dart';
+import 'package:flashcard/features/home/bloc/card/card_event.dart';
 import 'package:flashcard/features/home/bloc/card/card_state.dart';
 import 'package:flashcard/features/home/data/datasource/cards_list.dart';
+import 'package:flashcard/features/home/data/models/flash_card_model.dart';
 import 'package:flashcard/features/home/presentation/widgets/view_card.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class FlashCard extends StatefulWidget {
   const FlashCard({super.key});
@@ -38,6 +42,7 @@ class _FlashCardState extends State<FlashCard> {
     return Expanded(
       flex: 20,
       child: BlocListener<CardBloc, CardState>(
+       
         listener: (contex, state) {
           if (state.isFliped == true) {
             flipCardController.toggleCard();
@@ -63,10 +68,24 @@ class _FlashCardState extends State<FlashCard> {
               ),
 
               child: FlipCard(
-                
                 controller: flipCardController,
                 flipOnTouch: false,
-                front: ViewCard(text: card.question),
+                front: ViewCard(
+                  text: card.question,
+                  onDelete: () {
+                    context.read<CardBloc>().add(DeleteCard(index));
+                    cards.removeAt(index);
+                  },
+                  onUpdate: () => context.pushNamed(
+                    RouteNames.update,
+                    extra: FlashCardModel(
+                      id: index,
+                      question: card.question,
+                      answer: card.answer,
+                      reactions: card.reactions,
+                    ),
+                  ),
+                ),
                 back: ViewCard(text: card.answer),
               ),
             );

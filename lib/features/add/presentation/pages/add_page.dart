@@ -4,12 +4,14 @@ import 'package:flashcard/core/common/widgets/custom_input_filed.dart';
 import 'package:flashcard/core/utils/constants/colors.dart';
 import 'package:flashcard/core/utils/constants/size.dart';
 import 'package:flashcard/features/add/presentation/widgets/done_button.dart';
+import 'package:flashcard/features/home/data/models/flash_card_model.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class AddPage extends StatefulWidget {
-  const AddPage({super.key, this.question, this.answer, this.pageTitle});
-  final String? question, answer, pageTitle;
+  const AddPage({super.key, this.pageTitle, this.cardInfo});
+  final FlashCardModel? cardInfo;
+  final String? pageTitle;
   @override
   State<AddPage> createState() => _AddPageState();
 }
@@ -20,8 +22,8 @@ class _AddPageState extends State<AddPage> {
 
   @override
   void initState() {
-    questionController = TextEditingController(text: widget.question);
-    answerController = TextEditingController(text: widget.answer);
+    questionController = TextEditingController(text: widget.cardInfo?.question);
+    answerController = TextEditingController(text: widget.cardInfo?.answer);
     super.initState();
   }
 
@@ -34,6 +36,7 @@ class _AddPageState extends State<AddPage> {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint(widget.cardInfo?.answer);
     return Scaffold(
       appBar: CustomAppBar(
         title: Text(widget.pageTitle ?? "Add Card"),
@@ -47,7 +50,11 @@ class _AddPageState extends State<AddPage> {
       ),
       body: _buildBody(),
 
-      bottomNavigationBar: DoneButton(),
+      bottomNavigationBar: DoneButton(
+        index: widget.cardInfo?.id,
+        question: questionController,
+        answer: answerController,
+      ),
 
       resizeToAvoidBottomInset: true,
     );
@@ -62,6 +69,7 @@ class _AddPageState extends State<AddPage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          Spacer(),
           AppInputField(
             controller: questionController,
             title: 'Question',
@@ -76,6 +84,8 @@ class _AddPageState extends State<AddPage> {
             title: 'Answer',
             hintText: "Write answer with explaniation",
           ),
+          Spacer(),
+          Spacer(),
         ],
       ),
     );

@@ -6,7 +6,7 @@ class AppCircularBtn extends StatelessWidget {
     super.key,
     required this.child,
 
-    required this.onPressed,
+    this.onPressed,
     this.color = AppColors.primary,
     this.enableShadow = false,
     this.shadowColor,
@@ -19,7 +19,7 @@ class AppCircularBtn extends StatelessWidget {
   });
 
   final Widget child;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final Color color, focusColor, highlightColor, hoverColor, splashColor;
   final Color? shadowColor;
   final bool enableShadow;

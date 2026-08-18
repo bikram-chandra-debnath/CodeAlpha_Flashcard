@@ -13,3 +13,9 @@ class CardNextEvent extends CardEvent {
 }
 
 class CardPreviousEvent extends CardEvent {}
+
+class DeleteCard extends CardEvent {
+  final int index;
+
+  DeleteCard(this.index);
+}

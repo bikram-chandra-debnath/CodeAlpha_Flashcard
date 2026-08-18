@@ -3,4 +3,5 @@ class RoutePaths {
 
   static const String home = "/home";
   static const String add = "/add";
+  static const String update = "/update";
 }

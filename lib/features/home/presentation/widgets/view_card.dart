@@ -8,10 +8,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ViewCard extends StatelessWidget {
-  const ViewCard({super.key, required this.text, this.isAnswer = false});
+  const ViewCard({
+    super.key,
+    required this.text,
+    this.isAnswer = false,
+    this.onDelete,
+    this.onUpdate,
+  });
 
   final String text;
   final bool isAnswer;
+
+  final VoidCallback? onDelete, onUpdate;
 
   @override
   Widget build(BuildContext context) {
@@ -59,13 +67,15 @@ class ViewCard extends StatelessWidget {
                       children: [
                         AppCircularBtn(
                           color: Colors.transparent,
+
+                          onPressed: onDelete,
                           child: Icon(Icons.delete, size: 20),
-                          onPressed: () {},
                         ),
                         AppCircularBtn(
                           color: Colors.transparent,
+
+                          onPressed: onUpdate,
                           child: Icon(Icons.edit, size: 20),
-                          onPressed: () {},
                         ),
                       ],
                     ),

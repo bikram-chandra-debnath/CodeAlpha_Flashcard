@@ -7,6 +7,7 @@ class CardBloc extends Bloc<CardEvent, CardState> {
     on<CardFlipEvent>(_onCardFlipEvent);
     on<CardNextEvent>(_onCardNexEvent);
     on<CardPreviousEvent>(_onCardPreviousEvent);
+    on<DeleteCard>(_onDeleteCard);
   }
 
   void _onCardFlipEvent(CardFlipEvent event, Emitter<CardState> emit) {
@@ -26,6 +27,14 @@ class CardBloc extends Bloc<CardEvent, CardState> {
   void _onCardPreviousEvent(CardPreviousEvent event, Emitter<CardState> emit) {
     if (state.currentPage > 0) {
       emit(state.copyWith(isFliped: false, currentPage: state.currentPage - 1));
+    }
+  }
+
+  void _onDeleteCard(DeleteCard event, Emitter<CardState> emit) {
+    if (state.currentPage == 0) {
+      emit(state.copyWith(currentPage: event.index + 1));
+    } else {
+      emit(state.copyWith(currentPage: event.index + 1));
     }
   }
 }
