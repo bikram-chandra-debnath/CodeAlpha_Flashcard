@@ -16,9 +16,8 @@ class NextButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: BlocBuilder<QueryBloc, QueryState>(
-        builder: (context, state) {
-          if (state is LoadedState) {
-            final int length = state.query.length;
+        builder: (context, queryState) {
+          if (queryState is LoadedState) {
             return BlocSelector<CardBloc, CardState, bool>(
               selector: (state) {
                 return state.isFliped;
@@ -41,7 +40,7 @@ class NextButton extends StatelessWidget {
                   ),
                   onPressed: () {
                     context.read<CardBloc>().add(
-                      CardNextEvent(totalCards: length),
+                      CardNextEvent(totalCards: queryState.query.length),
                     );
                     debugPrint("Next clicked");
                   },

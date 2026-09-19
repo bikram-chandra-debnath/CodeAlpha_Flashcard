@@ -22,7 +22,10 @@ final router = GoRouter(
     GoRoute(
       path: RoutePaths.add,
       name: RouteNames.add,
-      builder: (context, state) => const AddPage(),
+      builder: (context, state) => BlocProvider(
+        create: (context) => QueryBloc(),
+        child: const AddPage(),
+      ),
     ),
     GoRoute(
       path: RoutePaths.update,

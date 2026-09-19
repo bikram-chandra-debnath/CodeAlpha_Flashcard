@@ -4,6 +4,9 @@ import 'package:flashcard/core/utils/constants/colors.dart';
 import 'package:flashcard/core/utils/constants/size.dart';
 import 'package:flashcard/features/home/bloc/card/card_bloc.dart';
 import 'package:flashcard/features/home/bloc/card/card_state.dart';
+import 'package:flashcard/features/home/bloc/query/query_bloc.dart';
+import 'package:flashcard/features/home/bloc/query/query_event.dart';
+import 'package:flashcard/features/home/bloc/query/query_state.dart';
 import 'package:flashcard/features/home/presentation/widgets/add_button.dart';
 import 'package:flashcard/features/home/presentation/widgets/flash_card.dart';
 import 'package:flashcard/features/home/presentation/widgets/hint_message.dart';
@@ -54,35 +57,54 @@ class HomePage extends StatelessWidget {
         actions: [
           AppCircularBtn(
             color: Colors.transparent,
-            child: Icon(Icons.settings),
-            onPressed: () {},
+            child: Icon(Icons.refresh),
+            onPressed: () {
+              context.read<QueryBloc>().add(FechQueryEvent());
+            },
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: AppSizes.defaultSpace),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Spacer(),
+      body: BlocBuilder<QueryBloc, QueryState>(
+        builder: (context, state) {
+          if (state is LoadingState) {
+            return Center(child: CircularProgressIndicator());
+          }
+          if (state is LoadedState) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppSizes.defaultSpace,
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Spacer(),
 
-            // card
-            FlashCard(),
+                  // card
+                  FlashCard(),
 
-            Spacer(),
-            // Answer hint
-            HintMessage(),
+                  Spacer(),
+                  // Answer hint
+                  HintMessage(),
 
-            Spacer(),
+                  Spacer(),
 
-            // show Answer button
-            ShowButton(),
-            Spacer(),
-            // next and previous button
-            NextAndPrevious(),
-            Spacer(),
-          ],
-        ),
+                  // show Answer button
+                  ShowButton(),
+                  Spacer(),
+                  // next and previous button
+                  NextAndPrevious(),
+                  Spacer(),
+                ],
+              ),
+            );
+          }
+
+          if (state is ErroeState) {
+            return Center(child: Text(state.message));
+          }
+
+          return Center(child: Text("Initialized"));
+        },
       ),
 
       bottomNavigationBar: AddButton(),

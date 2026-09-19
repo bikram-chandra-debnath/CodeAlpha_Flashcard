@@ -8,9 +8,17 @@ class QueryEvent extends Equatable {
 class FechQueryEvent extends QueryEvent {}
 
 class DeleteCardEvent extends QueryEvent {
-  final String index;
-  DeleteCardEvent(this.index);
+  final String id;
+  DeleteCardEvent(this.id);
 
   @override
-  List<Object> get props => [index];
+  List<Object> get props => [id];
+}
+
+class AddCardEvent extends QueryEvent {
+  final String id, question, answer;
+  AddCardEvent(this.id, this.question, this.answer);
+
+  @override
+  List<Object> get props => [id, question, answer];
 }
