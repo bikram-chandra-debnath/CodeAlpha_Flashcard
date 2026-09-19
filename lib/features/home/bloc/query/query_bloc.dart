@@ -13,6 +13,7 @@ class QueryBloc extends Bloc<QueryEvent, QueryState> {
     on<FechQueryEvent>(_onFechQueryEvent);
     on<DeleteCardEvent>(_onDeleteCardEvent);
     on<AddCardEvent>(_onAddCardEvent);
+    on<UpdateCardEvent>(_onUpdateCard);
   }
   // Fech Flash Card from Database
   Future<void> _onFechQueryEvent(
@@ -93,6 +94,40 @@ class QueryBloc extends Bloc<QueryEvent, QueryState> {
       }
     } else {
       debugPrint("Question or Answer might be empty");
+    }
+  }
+
+  // Update card
+  Future<void> _onUpdateCard(
+    UpdateCardEvent event,
+    Emitter<QueryState> emit,
+  ) async {
+    try {
+      await _firebaseFirestore.collection('FlashCards').doc(event.id).update({
+        'question': event.question,
+        'answer': event.answer,
+      });
+
+      // 2. Update the UI state
+      if (state is LoadedState) {
+        final currentCards = (state as LoadedState).query;
+        final updatedCards = currentCards.map((card) {
+          if (card.id == event.id) {
+            // Return a new model instance with the updated values
+            return FlashCardModel(
+              question: event.question,
+              answer: event.answer,
+              id: event.id,
+            );
+          }
+          return card; // Keep other cards exactly as they are
+        }).toList();
+
+        // 4. Emit the new list instance
+        emit(LoadedState(updatedCards));
+      }
+    } catch (e) {
+      emit(ErroeState(e.toString()));
     }
   }
 }

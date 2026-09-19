@@ -32,7 +32,10 @@ final router = GoRouter(
       name: RouteNames.update,
       builder: (context, state) {
         final cardInfo = state.extra as FlashCardModel;
-        return AddPage(pageTitle: "Update Card", cardInfo: cardInfo);
+        return BlocProvider(
+          create: (context) => QueryBloc(),
+          child: AddPage(pageTitle: "Update Card", cardInfo: cardInfo),
+        );
       },
     ),
   ],

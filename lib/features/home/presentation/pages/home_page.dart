@@ -74,28 +74,30 @@ class HomePage extends StatelessWidget {
               padding: const EdgeInsets.symmetric(
                 horizontal: AppSizes.defaultSpace,
               ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Spacer(),
+              child: state.query.isEmpty
+                  ? Center(child: Text("No Card Founded!"))
+                  : Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Spacer(),
 
-                  // card
-                  FlashCard(),
+                        // card
+                        FlashCard(),
 
-                  Spacer(),
-                  // Answer hint
-                  HintMessage(),
+                        Spacer(),
+                        // Answer hint
+                        HintMessage(),
 
-                  Spacer(),
+                        Spacer(),
 
-                  // show Answer button
-                  ShowButton(),
-                  Spacer(),
-                  // next and previous button
-                  NextAndPrevious(),
-                  Spacer(),
-                ],
-              ),
+                        // show Answer button
+                        ShowButton(),
+                        Spacer(),
+                        // next and previous button
+                        NextAndPrevious(),
+                        Spacer(),
+                      ],
+                    ),
             );
           }
 

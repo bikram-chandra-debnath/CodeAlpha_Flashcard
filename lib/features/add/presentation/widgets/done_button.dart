@@ -29,15 +29,23 @@ class DoneButton extends StatelessWidget {
         ),
         onPressed: () {
           final date = DateTime.now();
-          if (id != null) {}
-
-          context.read<QueryBloc>().add(
-            AddCardEvent(
-              "${date.year}${date.month}${date.month}${date.hour}${date.minute}${date.second}",
-              question!.text.toString(),
-              answer!.text.toString(),
-            ),
-          );
+          if (id != null) {
+            context.read<QueryBloc>().add(
+              UpdateCardEvent(
+                id.toString(),
+                question!.text.toString(),
+                answer!.text.toString(),
+              ),
+            );
+          } else {
+            context.read<QueryBloc>().add(
+              AddCardEvent(
+                "${date.year}${date.month}${date.month}${date.hour}${date.minute}${date.second}",
+                question!.text.toString(),
+                answer!.text.toString(),
+              ),
+            );
+          }
 
           context.canPop()
               ? context.pop()

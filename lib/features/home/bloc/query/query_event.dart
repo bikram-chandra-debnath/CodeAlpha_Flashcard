@@ -22,3 +22,10 @@ class AddCardEvent extends QueryEvent {
   @override
   List<Object> get props => [id, question, answer];
 }
+class UpdateCardEvent extends QueryEvent {
+  final String id, question, answer;
+  UpdateCardEvent(this.id, this.question, this.answer);
+
+  @override
+  List<Object> get props => [id, question, answer];
+}

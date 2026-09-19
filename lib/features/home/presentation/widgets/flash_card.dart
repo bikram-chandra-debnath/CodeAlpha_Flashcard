@@ -93,7 +93,7 @@ class _FlashCardState extends State<FlashCard> {
                               onUpdate: () => context.pushNamed(
                                 RouteNames.update,
                                 extra: FlashCardModel(
-                                  id: index.toString(),
+                                  id: flashcard.id,
                                   question: flashcard.question,
                                   answer: flashcard.answer,
                                 ),
