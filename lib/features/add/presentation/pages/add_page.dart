@@ -3,7 +3,6 @@ import 'package:flashcard/core/common/widgets/custom_circular_button.dart';
 import 'package:flashcard/core/common/widgets/custom_input_filed.dart';
 import 'package:flashcard/core/utils/constants/colors.dart';
 import 'package:flashcard/core/utils/constants/size.dart';
-import 'package:flashcard/features/add/presentation/widgets/done_button.dart';
 import 'package:flashcard/features/home/data/models/flash_card_model.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -50,13 +49,12 @@ class _AddPageState extends State<AddPage> {
       ),
       body: _buildBody(),
 
-      bottomNavigationBar: DoneButton(
-        index: widget.cardInfo?.id,
-        question: questionController,
-        answer: answerController,
-      ),
-
-      resizeToAvoidBottomInset: true,
+      //   bottomNavigationBar: DoneButton(
+      //     index: widget.cardInfo
+      //     question: questionController,
+      //     answer: answerController,
+      //   ),
+      //   resizeToAvoidBottomInset: true,
     );
   }
 

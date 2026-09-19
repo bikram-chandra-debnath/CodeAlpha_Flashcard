@@ -14,6 +14,7 @@ class LoadingState extends QueryState {}
 
 class LoadedState extends QueryState {
   final List<FlashCardModel> query;
+
   const LoadedState(this.query);
 
   @override

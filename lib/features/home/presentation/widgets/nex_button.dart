@@ -4,6 +4,8 @@ import 'package:flashcard/core/utils/constants/size.dart';
 import 'package:flashcard/features/home/bloc/card/card_bloc.dart';
 import 'package:flashcard/features/home/bloc/card/card_event.dart';
 import 'package:flashcard/features/home/bloc/card/card_state.dart';
+import 'package:flashcard/features/home/bloc/query/query_bloc.dart';
+import 'package:flashcard/features/home/bloc/query/query_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -13,13 +15,43 @@ class NextButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: BlocSelector<CardBloc, CardState, bool>(
-        selector: (state) {
-          return state.isFliped;
-        },
+      child: BlocBuilder<QueryBloc, QueryState>(
         builder: (context, state) {
+          if (state is LoadedState) {
+            final int length = state.query.length;
+            return BlocSelector<CardBloc, CardState, bool>(
+              selector: (state) {
+                return state.isFliped;
+              },
+              builder: (context, state) {
+                return AppElevatedBtn(
+                  color: state ? AppColors.sucess : AppColors.primary,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Next",
+                        style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(width: AppSizes.spaceBtwItems),
+                      Icon(Icons.arrow_forward),
+                    ],
+                  ),
+                  onPressed: () {
+                    context.read<CardBloc>().add(
+                      CardNextEvent(totalCards: length),
+                    );
+                    debugPrint("Next clicked");
+                  },
+                );
+              },
+            );
+          }
+
           return AppElevatedBtn(
-            color: state ? AppColors.sucess : AppColors.primary,
+            color: AppColors.primary,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -33,9 +65,7 @@ class NextButton extends StatelessWidget {
                 Icon(Icons.arrow_forward),
               ],
             ),
-            onPressed: () {
-              context.read<CardBloc>().add(CardNextEvent(totalCards: 10));
-            },
+            onPressed: () {},
           );
         },
       ),

@@ -1,39 +1,19 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 class FlashCardModel {
-  final int id;
+  final String id;
   final String question;
   final String answer;
 
-  const FlashCardModel({
+  FlashCardModel({
     required this.id,
     required this.question,
     required this.answer,
   });
 
-
-  factory FlashCardModel.fromMap(Map<String, dynamic> map) {
+  factory FlashCardModel.fromFirestore(String id, Map<String, dynamic> data) {
     return FlashCardModel(
-      id: map['id'] ?? 0,
-      question: map['question'] ?? '',
-      answer: map['answer'] ?? '',
+      id: id,
+      question: data['question'] ?? '',
+      answer: data['answer'] ?? '',
     );
   }
-
-  
-  factory FlashCardModel.fromDocument(DocumentSnapshot doc) {
-    final map = doc.data() as Map<String, dynamic>? ?? {};
-    return FlashCardModel.fromMap(map);
-  }
-
-  
-  Map<String, dynamic> toMap() {
-    return {
-      'id': id,
-      'question': question,
-      'answer': answer,
-    };
-  }
 }
-
-
