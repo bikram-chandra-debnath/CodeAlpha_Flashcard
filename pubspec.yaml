@@ -37,7 +37,10 @@ dependencies:
   flip_card:
   flutter_bloc:
   equatable: 
-  go_router: 
+  go_router:
+  firebase_core: 
+  firebase_auth: 
+  cloud_firestore:  
 
 dev_dependencies:
   flutter_test:

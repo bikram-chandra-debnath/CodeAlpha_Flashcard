@@ -4,7 +4,6 @@ import 'package:flashcard/core/utils/constants/size.dart';
 import 'package:flashcard/features/home/bloc/card/card_bloc.dart';
 import 'package:flashcard/features/home/bloc/card/card_event.dart';
 import 'package:flashcard/features/home/bloc/card/card_state.dart';
-import 'package:flashcard/features/home/data/datasource/cards_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -35,9 +34,7 @@ class NextButton extends StatelessWidget {
               ],
             ),
             onPressed: () {
-              context.read<CardBloc>().add(
-                CardNextEvent(totalCards: cards.length),
-              );
+              context.read<CardBloc>().add(CardNextEvent(totalCards: 10));
             },
           );
         },
