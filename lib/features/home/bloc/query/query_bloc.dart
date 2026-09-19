@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flashcard/features/home/bloc/query/query_event.dart';
 import 'package:flashcard/features/home/bloc/query/query_state.dart';
 import 'package:flashcard/features/home/data/models/flash_card_model.dart';
+import 'package:flutter/rendering.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -9,6 +10,7 @@ class QueryBloc extends Bloc<QueryEvent, QueryState> {
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
   QueryBloc() : super(QueryInitialState()) {
     on<FechQueryEvent>(_onFechQueryEvent);
+    on<DeleteCardEvent>(_onDeleteCardEvent);
   }
 
   Future<void> _onFechQueryEvent(
@@ -28,6 +30,33 @@ class QueryBloc extends Bloc<QueryEvent, QueryState> {
       emit(LoadedState(quotes));
     } catch (error) {
       emit(ErroeState(error.toString()));
+    }
+  }
+
+  Future<void> _onDeleteCardEvent(
+    DeleteCardEvent event,
+    Emitter<QueryState> emit,
+  ) async {
+    try {
+      await _firebaseFirestore
+          .collection('FlashCards')
+          .doc(event.index)
+          .delete();
+
+      // 2. Get current items if state is loaded
+      if (state is LoadedState) {
+        final currentCard = (state as LoadedState).query;
+
+        // 3. Create a NEW list without the deleted item (Crucial for Equatable)
+        final updatedCards = currentCard
+            .where((item) => item.id != event.index)
+            .toList();
+
+        // 4. Emit new state
+        emit(LoadedState(updatedCards));
+      }
+    } catch (error) {
+      debugPrint("Delete error");
     }
   }
 }

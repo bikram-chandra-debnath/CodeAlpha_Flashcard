@@ -3,6 +3,7 @@ import 'package:flashcard/core/utils/constants/size.dart';
 import 'package:flashcard/features/home/bloc/card/card_bloc.dart';
 import 'package:flashcard/features/home/bloc/card/card_state.dart';
 import 'package:flashcard/features/home/bloc/query/query_bloc.dart';
+import 'package:flashcard/features/home/bloc/query/query_event.dart';
 import 'package:flashcard/features/home/bloc/query/query_state.dart';
 import 'package:flashcard/features/home/data/models/flash_card_model.dart';
 import 'package:flashcard/features/home/presentation/widgets/view_card.dart';
@@ -66,37 +67,43 @@ class _FlashCardState extends State<FlashCard> {
               );
             }
             if (state is LoadedState) {
-              return PageView(
-                controller: pageController,
-                pageSnapping: false,
-                physics: NeverScrollableScrollPhysics(),
-                children: List.generate(state.query.length, (index) {
-                  final flashcard = state.query[index];
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: AppSizes.lg * 2.3,
-                    ),
-
-                    child: FlipCard(
-                      controller: flipCardController,
-                      flipOnTouch: false,
-                      front: ViewCard(
-                        text: flashcard.question,
-                        onDelete: () {},
-                        onUpdate: () => context.pushNamed(
-                          RouteNames.update,
-                          extra: FlashCardModel(
-                            id: index.toString(),
-                            question: flashcard.question,
-                            answer: flashcard.answer,
+              return state.query.isEmpty
+                  ? Center(child: Text("No Card Founded"))
+                  : PageView(
+                      controller: pageController,
+                      pageSnapping: false,
+                      physics: NeverScrollableScrollPhysics(),
+                      children: List.generate(state.query.length, (index) {
+                        final flashcard = state.query[index];
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: AppSizes.lg * 2.3,
                           ),
-                        ),
-                      ),
-                      back: ViewCard(text: flashcard.answer),
-                    ),
-                  );
-                }),
-              );
+
+                          child: FlipCard(
+                            controller: flipCardController,
+                            flipOnTouch: false,
+                            front: ViewCard(
+                              text: flashcard.question,
+                              onDelete: () {
+                                context.read<QueryBloc>().add(
+                                  DeleteCardEvent(flashcard.id),
+                                );
+                              },
+                              onUpdate: () => context.pushNamed(
+                                RouteNames.update,
+                                extra: FlashCardModel(
+                                  id: index.toString(),
+                                  question: flashcard.question,
+                                  answer: flashcard.answer,
+                                ),
+                              ),
+                            ),
+                            back: ViewCard(text: flashcard.answer),
+                          ),
+                        );
+                      }),
+                    );
             }
             return Center(child: Text("Initializing..."));
           },
